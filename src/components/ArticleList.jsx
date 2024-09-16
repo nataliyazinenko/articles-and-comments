@@ -1,5 +1,8 @@
 import { getAllArticles } from "../../api";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import SortBy from "./SortBy";
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
@@ -28,14 +31,31 @@ const ArticleList = () => {
 
   return (
     <div>
+      <SortBy />
       <ul>
         {articles.map((article) => {
           return (
             <section key={article.article_id} className="articleCard">
-              <h3 className="articleCardTopic">
-                {article.topic[0].toUpperCase() + article.topic.slice(1)}
-              </h3>
-              <h2>{article.title}</h2>
+              <div className="clickArticleContainer">
+                <h3 className="articleCardTopic">
+                  {article.topic[0].toUpperCase() + article.topic.slice(1)}
+                </h3>
+                <Link
+                  to={`/articles/${article.article_id}`}
+                  className="titleLink"
+                >
+                  <img
+                    className="articleListImage"
+                    src={article.article_img_url}
+                  ></img>
+
+                  <h2>{article.title}</h2>
+
+                  <h4>BY {article.author.toUpperCase()}</h4>
+                  <h4>{moment(article.created_at).startOf("day").fromNow()}</h4>
+                </Link>
+              </div>
+
               <div>
                 <button type="voteButton" className="vote">
                   <p>-</p>
@@ -45,6 +65,7 @@ const ArticleList = () => {
                   <p>+</p>
                 </button>{" "}
               </div>
+
               <a>{article.comment_count} Comments</a>
             </section>
           );
