@@ -9,3 +9,11 @@ export function getAllArticles() {
     return data;
   });
 }
+
+export function getArticle(article_id) {
+  return articlesandcommentsAPI
+    .get(`articles/${article_id}`)
+    .then(({ data }) => {
+      return data;
+    });
+}
