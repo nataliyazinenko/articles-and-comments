@@ -10,7 +10,6 @@
 .container {
   position: relative;
   display: flex;
-
   gap: 6rem;
   color: #222222;
   font-size: 16px;
@@ -18,7 +17,6 @@
 
 .articleCard {
   border: 1px solid #ddd;
-
   background-color: #fff;
   padding: 1rem;
   box-shadow: 0 1px 1px rgba(0, 0, 10, 0);
@@ -44,7 +42,7 @@
 }
 
 .articleImage {
-  display: block;
+  display: flexbox;
 }
 
 .articleCardTopic {
@@ -56,4 +54,50 @@
   background-color: #f5f5f5;
   border-radius: 5px;
   padding: 0.5rem;
+}
+
+.commentCard {
+  border-top: solid #000000 0.1px;
+}
+
+.comment {
+  font-size: smaller;
+}
+
+.commentsContainer {
+  position: relative;
+  display: flexbox;
+
+  color: #222222;
+  font-size: 16px;
+}
+
+.articleContainer {
+  position: relative;
+  display: flexbox;
+  padding: 1rem;
+  color: #222222;
+  font-size: 16px;
+}
+
+.toCommentContainer {
+  position: relative;
+  display: inline-flex;
+  padding: 1rem;
+  color: #222222;
+  font-size: 16px;
+}
+
+.commentForm {
+  position: relative;
+  display: inline-flex;
+  padding: 1rem;
+  color: #000000;
+  font-size: 16px;
+}
+
+.signUpToComment {
+  position: relative;
+  display: inline-flex;
+  font-size: 13px;
 }

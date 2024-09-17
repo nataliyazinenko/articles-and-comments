@@ -2,6 +2,7 @@ import { getArticle } from "../../api";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import Comments from "./Comments";
 
 const Article = () => {
   const { article_id } = useParams();
@@ -13,7 +14,6 @@ const Article = () => {
     setError(null);
     getArticle(article_id)
       .then((data) => {
-        console.log("!!!!", data);
         setArticle(data.article);
         setIsLoading(false);
       })
@@ -30,18 +30,19 @@ const Article = () => {
     return <p>Something went wrong...</p>;
   }
 
-  console.log("article!", article);
-
   return (
     <div>
-      <h3 className="articleCardTopic">
-        {article.topic[0].toUpperCase() + article.topic.slice(1)}
-      </h3>
-      <img className="articleImage" src={article.article_img_url}></img>
-      <h1>{article.title}</h1>
-      <h3>By {article.author}</h3>
-      <h4>{moment(article.created_at).startOf("day").fromNow()}</h4>
-      <p>{article.body}</p>
+      <div className="articleContainer">
+        <h3 className="articleCardTopic">
+          {article.topic[0].toUpperCase() + article.topic.slice(1)}
+        </h3>
+        <img className="articleImage" src={article.article_img_url}></img>
+        <h1>{article.title}</h1>
+        <h3>By {article.author}</h3>
+        <h4>{moment(article.created_at).startOf("day").fromNow()}</h4>
+        <p>{article.body}</p>
+      </div>
+      <Comments />
     </div>
   );
 };
