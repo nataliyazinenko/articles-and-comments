@@ -39,20 +39,32 @@ const Article = () => {
   const handleVotePlus = () => {
     if (myVote === 1) {
       setVotes((oldValue) => oldValue - 1);
-      patchArticle(article_id, -1);
       setMyVote(null);
-      localStorage.removeItem(`votes_${article_id}`);
+      patchArticle(article_id, -1)
+        .then((res) => {
+          setMyVote(null);
+          localStorage.removeItem(`votes_${article_id}`);
+        })
+        .catch((err) => {
+          setMyVote(1);
+          setVotes((oldValue) => oldValue + 1);
+        });
     } else if (myVote === -1) {
       setVotes((oldValue) => oldValue + 2);
       patchArticle(article_id, 2);
       setMyVote(1);
       localStorage.setItem(`votes_${article_id}`, 1);
-    } else if (myVote === null) {
+    }
+
+    // setMyVote(-1);
+    else if (myVote === null) {
       setVotes((oldValue) => oldValue + 1);
       patchArticle(article_id, 1);
       setMyVote(1);
       localStorage.setItem(`votes_${article_id}`, 1);
     }
+
+    // setMyVote(null)
   };
 
   const handleVoteMinus = () => {
