@@ -102,3 +102,17 @@
   display: inline-flex;
   font-size: 13px;
 }
+
+.buttonLikeHighlighted {
+  background-color: #07f10e;
+  color: white;
+}
+
+.buttonDislikeHighlighted {
+  background-color: #dd9174;
+  color: white;
+}
+
+.buttonNotHighlighted {
+  background-color: #ffffff;
+}
