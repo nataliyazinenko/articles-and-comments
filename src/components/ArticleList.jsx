@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import SortBy from "./SortBy";
+import { GrLike } from "react-icons/gr";
+import { LiaCommentAltSolid } from "react-icons/lia";
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
@@ -48,25 +50,13 @@ const ArticleList = () => {
                     className="articleListImage"
                     src={article.article_img_url}
                   ></img>
-
                   <h2>{article.title}</h2>
-
                   <h4>BY {article.author.toUpperCase()}</h4>
-                  <h4>{moment(article.created_at).startOf("day").fromNow()}</h4>
                 </Link>
+                <h4>{moment(article.created_at).startOf("day").fromNow()}</h4>
+                {article.votes} <GrLike /> {article.comment_count}{" "}
+                <LiaCommentAltSolid />
               </div>
-
-              <div>
-                <button type="voteButton" className="vote">
-                  <p>-</p>
-                </button>{" "}
-                {article.votes} votes{" "}
-                <button type="voteButton" className="vote">
-                  <p>+</p>
-                </button>{" "}
-              </div>
-
-              <a>{article.comment_count} Comments</a>
             </section>
           );
         })}

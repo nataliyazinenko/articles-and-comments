@@ -25,3 +25,12 @@ export function getComments(article_id) {
       return data;
     });
 }
+
+export function patchArticle(article_id, vote) {
+  const patchBody = { inc_votes: vote };
+  return articlesandcommentsAPI
+    .patch(`articles/${article_id}`, patchBody)
+    .then(({ data }) => {
+      return data;
+    });
+}
