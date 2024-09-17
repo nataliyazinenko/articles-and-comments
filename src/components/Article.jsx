@@ -11,17 +11,7 @@ const Article = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [votes, setVotes] = useState(0);
-
-  const handleVotePlus = () => {
-    setVotes((oldValue) => oldValue + 1);
-    patchArticle(article_id, 1);
-    setVotes(oldValue);
-  };
-
-  const handleVoteMinus = () => {
-    setVotes(() => -1);
-    patchArticle(article_id, -1);
-  };
+  const [myVote, setMyVote] = useState(null);
 
   useEffect(() => {
     setError(null);
@@ -35,7 +25,50 @@ const Article = () => {
         setError("error fetching data");
         setIsLoading(false);
       });
+
+    const savedVotes = localStorage.getItem(`votes_${article_id}`);
+    if (savedVotes !== null) {
+      setMyVote(JSON.parse(savedVotes));
+    }
   }, [article_id]);
+
+  const handleVotePlus = () => {
+    if (myVote === 1) {
+      setVotes((oldValue) => oldValue - 1);
+      patchArticle(article_id, -1);
+      setMyVote(null);
+      localStorage.removeItem(`votes_${article_id}`);
+    } else if (myVote === -1) {
+      setVotes((oldValue) => oldValue + 2);
+      patchArticle(article_id, 2);
+      setMyVote(1);
+      localStorage.setItem(`votes_${article_id}`, 1);
+    } else if (myVote === null) {
+      setVotes((oldValue) => oldValue + 1);
+      patchArticle(article_id, 1);
+      setMyVote(1);
+      localStorage.setItem(`votes_${article_id}`, 1);
+    }
+  };
+
+  const handleVoteMinus = () => {
+    if (myVote === -1) {
+      setVotes((oldValue) => oldValue + 1);
+      patchArticle(article_id, 1);
+      setMyVote(null);
+      localStorage.removeItem(`votes_${article_id}`);
+    } else if (myVote === 1) {
+      setVotes((oldValue) => oldValue - 2);
+      patchArticle(article_id, -2);
+      setMyVote(-1);
+      localStorage.setItem(`votes_${article_id}`, -1);
+    } else if (myVote === null) {
+      setVotes((oldValue) => oldValue - 1);
+      patchArticle(article_id, -1);
+      setMyVote(-1);
+      localStorage.setItem(`votes_${article_id}`, -1);
+    }
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
