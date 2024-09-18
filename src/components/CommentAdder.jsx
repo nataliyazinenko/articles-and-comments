@@ -17,6 +17,11 @@ const CommentAdder = ({ addNewComment }) => {
     setIsLoading(true);
     setError(null);
 
+    console.log("!!! trying to post a comment with:", {
+      article_id,
+      newComment,
+    });
+
     postComment(article_id, newComment).then((data) => {
       console.log("DATA!!!!", data);
       addNewComment(data.comment);

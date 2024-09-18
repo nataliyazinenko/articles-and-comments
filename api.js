@@ -41,7 +41,7 @@ export function patchArticle(article_id, vote) {
 
 export function postComment(article_id, newComment) {
   return articlesandcommentsAPI
-    .post(`articles/${article_id}/comments`, { newComment })
+    .post(`articles/${article_id}/comments`, { newComment: newComment })
     .then(({ data }) => {
       return data;
     });
