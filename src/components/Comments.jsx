@@ -2,6 +2,7 @@ import { getComments } from "../../api";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import CommentAdder from "./CommentAdder";
 
 const Comments = () => {
   const { article_id } = useParams();
@@ -22,6 +23,10 @@ const Comments = () => {
       });
   }, [article_id]);
 
+  const addNewComment = (newComment) => {
+    setComments((oldComments) => [newComment, ...oldComments]);
+  };
+
   if (isLoading) {
     return <p>Loading comments....</p>;
   }
@@ -32,15 +37,9 @@ const Comments = () => {
   return (
     <>
       <h2>Comments ({comments.length})</h2>
-      <div className="toCommentContainer">
-        <form className="commentForm">
-          <input placeholder="What do you think?" type="text"></input>
 
-          <button type="button" className="signUpToComment">
-            <p>Sign up to post</p>
-          </button>
-        </form>
-      </div>
+      <CommentAdder addNewComment={addNewComment} />
+
       <div className="commentsContainer">
         {comments.length === 0 ? (
           <h3>No comments yet</h3>

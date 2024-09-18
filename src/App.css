@@ -67,7 +67,6 @@
 .commentsContainer {
   position: relative;
   display: flexbox;
-
   color: #222222;
   font-size: 16px;
 }
@@ -80,27 +79,33 @@
   font-size: 16px;
 }
 
-.toCommentContainer {
-  position: relative;
-  display: inline-flex;
-  padding-left: 1rem;
-  margin-left: 10px;
-  color: #222222;
-  font-size: 16px;
-}
-
 .commentForm {
-  position: relative;
-  display: inline-flex;
-  padding: 1rem;
-  color: #000000;
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  max-width: 33rem;
+  margin: auto;
+  padding: 10px;
+  background-color: #c4c0c0;
 }
 
-.signUpToComment {
-  position: relative;
-  display: inline-flex;
-  font-size: 13px;
+.inputComment,
+.inputName,
+.submit {
+  font-size: 15px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 30rem;
+  align-self: center;
+}
+
+.inputComment {
+  min-height: 5rem;
+  max-height: 19rem;
+  resize: vertical;
+}
+
+.submit {
+  width: 10rem;
 }
 
 .buttonLikeHighlighted {

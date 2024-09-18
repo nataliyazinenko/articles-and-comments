@@ -38,3 +38,11 @@ export function patchArticle(article_id, vote) {
       throw err;
     });
 }
+
+export function postComment(article_id, newComment) {
+  return articlesandcommentsAPI
+    .post(`articles/${article_id}/comments`, { newComment })
+    .then(({ data }) => {
+      return data;
+    });
+}

@@ -77,20 +77,6 @@ const Article = () => {
   };
 
   const handleVoteMinus = () => {
-    // if (myVote === 1) {
-    //   setVotes((oldValue) => oldValue - 1);
-    //   setMyVote(null);
-    //   patchArticle(article_id, -1)
-    //     .then((res) => {
-    //       setMyVote(null);
-    //       localStorage.removeItem(`votes_${article_id}`);
-    //     })
-    //     .catch((err) => {
-    //       setMyVote(1);
-    //       setVotes((oldValue) => oldValue + 1);
-    //     });
-    // }
-
     if (myVote === -1) {
       setVotes((oldValue) => oldValue + 1);
       setMyVote(null);
