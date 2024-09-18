@@ -57,3 +57,9 @@ export function deleteComment(comment_id) {
       return data;
     });
 }
+
+export function getTopics() {
+  return articlesandcommentsAPI.get("/topics").then(({ data }) => {
+    return data;
+  });
+}
