@@ -38,3 +38,14 @@ export function patchArticle(article_id, vote) {
       throw err;
     });
 }
+
+export function postComment(article_id, username, newComment) {
+  return articlesandcommentsAPI
+    .post(`articles/${article_id}/comments`, {
+      username: username,
+      body: newComment,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+}
