@@ -26,13 +26,15 @@ const Topics = () => {
     return <p>{error}</p>;
   }
 
-  console.log("!!!!", topics);
-
   return (
     <div className="topics">
       <ul>
         {topics.map((topic) => {
-          return <h2>{topic.slug}</h2>;
+          return (
+            <section key={topic.slug} className="topic">
+              <h2>{topic.slug}</h2>
+            </section>
+          );
         })}
       </ul>
     </div>
