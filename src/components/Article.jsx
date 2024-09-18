@@ -12,9 +12,9 @@ const Article = () => {
   const [error, setError] = useState(null);
   const [votes, setVotes] = useState(0);
   const [myVote, setMyVote] = useState(null);
-  const [buttonDislikeHighlighted, setButtonDislikeHighlighted] =
-    useState(null);
-  const [buttonLikeHighlighted, setButtonLikeHighlighted] = useState(null);
+
+  const buttonLikeHighlighted = myVote === 1;
+  const buttonDislikeHighlighted = myVote === -1;
 
   useEffect(() => {
     setError(null);
@@ -30,74 +30,103 @@ const Article = () => {
       });
 
     const savedVotes = localStorage.getItem(`votes_${article_id}`);
-    const savedLikeHighlight = localStorage.getItem(
-      `voteLikeHighlighted_${article_id}`
-    );
-    const savedDislikeHighlight = localStorage.getItem(
-      `voteDislikeHighlighted_${article_id}`
-    );
+
     if (savedVotes !== null) {
       setMyVote(JSON.parse(savedVotes));
-      setButtonDislikeHighlighted(JSON.parse(savedDislikeHighlight));
-      setButtonLikeHighlighted(JSON.parse(savedLikeHighlight));
     }
   }, [article_id]);
 
   const handleVotePlus = () => {
     if (myVote === 1) {
       setVotes((oldValue) => oldValue - 1);
-      patchArticle(article_id, -1);
       setMyVote(null);
-      setButtonLikeHighlighted(false);
-      setButtonDislikeHighlighted(false);
-      localStorage.removeItem(`votes_${article_id}`);
-      localStorage.removeItem(`voteLikeHighlighted_${article_id}`);
-      localStorage.removeItem(`voteDislikeHighlighted_${article_id}`);
+      patchArticle(article_id, -1)
+        .then((res) => {
+          setMyVote(null);
+          localStorage.removeItem(`votes_${article_id}`);
+        })
+        .catch((err) => {
+          setMyVote(1);
+          setVotes((oldValue) => oldValue + 1);
+        });
     } else if (myVote === -1) {
       setVotes((oldValue) => oldValue + 2);
-      patchArticle(article_id, 2);
       setMyVote(1);
-      setButtonLikeHighlighted(true);
-      setButtonDislikeHighlighted(false);
-      localStorage.setItem(`votes_${article_id}`, 1);
-      localStorage.setItem(`voteLikeHighlighted_${article_id}`, true);
-      localStorage.setItem(`voteDislikeHighlighted_${article_id}`, false);
+      patchArticle(article_id, 2)
+        .then((res) => {
+          setMyVote(1);
+          localStorage.setItem(`votes_${article_id}`, 1);
+        })
+        .catch((err) => {
+          setMyVote(-1);
+          setVotes((oldValue) => oldValue - 2);
+        });
     } else if (myVote === null) {
       setVotes((oldValue) => oldValue + 1);
-      patchArticle(article_id, 1);
       setMyVote(1);
-      setButtonLikeHighlighted(true);
-      localStorage.setItem(`votes_${article_id}`, 1);
-      localStorage.setItem(`voteLikeHighlighted_${article_id}`, true);
+      patchArticle(article_id, 1)
+        .then((res) => {
+          setMyVote(1);
+          localStorage.setItem(`votes_${article_id}`, 1);
+        })
+        .catch((err) => {
+          setMyVote(null);
+          setVotes((oldValue) => oldValue - 1);
+        });
     }
   };
 
   const handleVoteMinus = () => {
+    // if (myVote === 1) {
+    //   setVotes((oldValue) => oldValue - 1);
+    //   setMyVote(null);
+    //   patchArticle(article_id, -1)
+    //     .then((res) => {
+    //       setMyVote(null);
+    //       localStorage.removeItem(`votes_${article_id}`);
+    //     })
+    //     .catch((err) => {
+    //       setMyVote(1);
+    //       setVotes((oldValue) => oldValue + 1);
+    //     });
+    // }
+
     if (myVote === -1) {
       setVotes((oldValue) => oldValue + 1);
-      patchArticle(article_id, 1);
       setMyVote(null);
-      setButtonDislikeHighlighted(false);
-      setButtonLikeHighlighted(false);
-      localStorage.removeItem(`votes_${article_id}`);
-      localStorage.removeItem(`voteDislikeHighlighted_${article_id}`);
-      localStorage.removeItem(`voteLikeHighlighted_${article_id}`);
+      patchArticle(article_id, 1)
+        .then((res) => {
+          setMyVote(null);
+          localStorage.removeItem(`votes_${article_id}`);
+        })
+        .catch((err) => {
+          setMyVote(-1);
+          setVotes((oldValue) => oldValue - 1);
+        });
     } else if (myVote === 1) {
       setVotes((oldValue) => oldValue - 2);
-      patchArticle(article_id, -2);
       setMyVote(-1);
-      setButtonDislikeHighlighted(true);
-      setButtonLikeHighlighted(false);
-      localStorage.setItem(`votes_${article_id}`, -1);
-      localStorage.setItem(`voteDislikeHighlighted_${article_id}`, true);
-      localStorage.setItem(`voteLikeHighlighted_${article_id}`, false);
+      patchArticle(article_id, -2)
+        .then((res) => {
+          setMyVote(-1);
+          localStorage.setItem(`votes_${article_id}`, -1);
+        })
+        .catch((err) => {
+          setMyVote(1);
+          setVotes((oldValue) => oldValue + 2);
+        });
     } else if (myVote === null) {
       setVotes((oldValue) => oldValue - 1);
-      patchArticle(article_id, -1);
       setMyVote(-1);
-      setButtonDislikeHighlighted(true);
-      localStorage.setItem(`votes_${article_id}`, -1);
-      localStorage.setItem(`voteDislikeHighlighted_${article_id}`, true);
+      patchArticle(article_id, -1)
+        .then((res) => {
+          setMyVote(-1);
+          localStorage.setItem(`votes_${article_id}`, -1);
+        })
+        .catch((err) => {
+          setMyVote(null);
+          setVotes((oldValue) => oldValue + 1);
+        });
     }
   };
 
@@ -122,7 +151,7 @@ const Article = () => {
           id="dislike"
           onClick={handleVoteMinus}
           className={
-            buttonDislikeHighlighted === true
+            buttonDislikeHighlighted
               ? "buttonDislikeHighlighted"
               : "buttonNotHighlighted"
           }
@@ -134,7 +163,7 @@ const Article = () => {
           id="like"
           onClick={handleVotePlus}
           className={
-            buttonLikeHighlighted === true
+            buttonLikeHighlighted
               ? "buttonLikeHighlighted"
               : "buttonNotHighlighted"
           }
