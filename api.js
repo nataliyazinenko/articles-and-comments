@@ -4,10 +4,14 @@ const articlesandcommentsAPI = axios.create({
   baseURL: "https://project01-wgzu.onrender.com/api",
 });
 
-export function getAllArticles() {
-  return articlesandcommentsAPI.get("/articles").then(({ data }) => {
-    return data;
-  });
+export function getAllArticles(query) {
+  return articlesandcommentsAPI
+    .get("/articles", {
+      params: query,
+    })
+    .then(({ data }) => {
+      return data;
+    });
 }
 
 export function getArticle(article_id) {

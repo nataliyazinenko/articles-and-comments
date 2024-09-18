@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import CommentAdder from "./CommentAdder";
+import { CURRENT_USER } from "../constants";
 
 const Comments = () => {
   const { article_id } = useParams();
@@ -65,9 +66,11 @@ const Comments = () => {
           comments.map((comment) => {
             return (
               <section key={comment.comment_id} className="commentCard">
-                <button onClick={() => handleDelete(comment.comment_id)}>
-                  x
-                </button>
+                {comment.author === CURRENT_USER ? (
+                  <button onClick={() => handleDelete(comment.comment_id)}>
+                    x
+                  </button>
+                ) : null}
                 <h5>
                   {comment.author}
                   <br />
