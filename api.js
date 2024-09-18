@@ -32,5 +32,9 @@ export function patchArticle(article_id, vote) {
     .patch(`articles/${article_id}`, patchBody)
     .then(({ data }) => {
       return data;
+    })
+    .catch((err) => {
+      alert(err);
+      throw err;
     });
 }
