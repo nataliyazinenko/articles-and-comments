@@ -7,9 +7,14 @@ const CommentAdder = ({ addNewComment }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
+  const [username, setUsername] = useState("");
 
-  const handleChange = (event) => {
+  const handleCommentChange = (event) => {
     setNewComment(event.target.value);
+  };
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -17,43 +22,25 @@ const CommentAdder = ({ addNewComment }) => {
     setIsLoading(true);
     setError(null);
 
-    console.log("!!! trying to post a comment with:", {
-      article_id,
-      newComment,
-    });
-
-    postComment(article_id, newComment).then((data) => {
-      console.log("DATA!!!!", data);
-      addNewComment(data.comment);
-      setNewComment("");
-      setIsLoading(true);
-    });
+    postComment(article_id, username, newComment)
+      .then((data) => {
+        addNewComment(data.comment);
+        setNewComment("");
+        setUsername("");
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError("problem occured - posting failed");
+        setIsLoading(false);
+      });
   };
-
-  // useEffect(() => {
-  //   setError(null);
-  //   getComments(article_id)
-  //     .then((data) => {
-  //       setComments(data.comments);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setError("error fetching data");
-  //       setIsLoading(false);
-  //     });
-  // }, [article_id]);
-
-  // if (isLoading) {
-  //   return <p>Loading comments....</p>;
-  // }
-  // if (error) {
-  //   return <p>Something went wrong...</p>;
-  // }
 
   return (
     <section>
       <form onSubmit={handleSubmit} className="commentForm">
         <input
+          onChange={handleUsernameChange}
+          value={username}
           type="text"
           id="username"
           name="username"
@@ -64,7 +51,7 @@ const CommentAdder = ({ addNewComment }) => {
         ></input>
 
         <textarea
-          onChange={handleChange}
+          onChange={handleCommentChange}
           value={newComment}
           id="comment"
           name="comment"
@@ -76,9 +63,10 @@ const CommentAdder = ({ addNewComment }) => {
         ></textarea>
 
         <button type="submit" className="submit">
-          Submit Comment
+          {isLoading ? "Submitting..." : "Submit Comment"}
         </button>
       </form>
+      {error ? <p className="error">{error}</p> : null}
     </section>
   );
 };
