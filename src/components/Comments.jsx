@@ -1,4 +1,4 @@
-import { getComments } from "../../api";
+import { getComments, deleteComment } from "../../api";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
@@ -9,6 +9,24 @@ const Comments = () => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(null);
+
+  const handleDelete = (comment_id) => {
+    setIsDeleting(comment_id);
+    deleteComment(comment_id)
+      .then(() => {
+        setComments((oldValue) => {
+          const newValue = oldValue.filter(
+            (comment) => comment.comment_id !== comment_id
+          );
+          return newValue;
+        });
+      })
+      .catch((error) => {
+        setError("error deleting comment");
+      });
+    setIsDeleting(null);
+  };
 
   useEffect(() => {
     setError(null);
@@ -18,7 +36,7 @@ const Comments = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError("error fetching data");
+        setError("error fetching comments");
         setIsLoading(false);
       });
   }, [article_id]);
@@ -31,7 +49,7 @@ const Comments = () => {
     return <p>Loading comments....</p>;
   }
   if (error) {
-    return <p>Something went wrong...</p>;
+    return <p>{error}</p>;
   }
 
   return (
@@ -47,8 +65,15 @@ const Comments = () => {
           comments.map((comment) => {
             return (
               <section key={comment.comment_id} className="commentCard">
-                <h5>{comment.author}</h5>
-                <h5>{moment(comment.created_at).startOf("hour").fromNow()}</h5>
+                <button onClick={() => handleDelete(comment.comment_id)}>
+                  x
+                </button>
+                <h5>
+                  {comment.author}
+                  <br />
+                  {moment(comment.created_at).startOf("hour").fromNow()}
+                </h5>
+
                 <p className="comment">{comment.body}</p>
               </section>
             );

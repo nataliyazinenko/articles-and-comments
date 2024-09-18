@@ -49,3 +49,11 @@ export function postComment(article_id, username, newComment) {
       return data;
     });
 }
+
+export function deleteComment(comment_id) {
+  return articlesandcommentsAPI
+    .delete(`comments/${comment_id}`)
+    .then(({ data }) => {
+      return data;
+    });
+}

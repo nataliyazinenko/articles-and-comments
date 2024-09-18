@@ -34,6 +34,16 @@
   color: #555;
 }
 
+.headingLink {
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.headingLink:hover {
+  color: #000000;
+}
+
 .articleListImage {
   display: block;
   max-width: 100%;
@@ -58,6 +68,7 @@
 
 .commentCard {
   border-top: solid #000000 0.1px;
+  padding-top: 30px;
 }
 
 .comment {
@@ -85,6 +96,7 @@
   max-width: 33rem;
   margin: auto;
   padding: 10px;
+  margin-bottom: 10px;
   background-color: #ede7e7;
 }
 

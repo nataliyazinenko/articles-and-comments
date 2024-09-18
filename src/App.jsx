@@ -2,13 +2,17 @@ import "./App.css";
 import ArticleList from "./components/ArticleList";
 import Article from "./components/Article";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <div className="app">
         <div className="container">
-          <button type="menuButton">☰</button> <h1>Articles & Comments</h1>
+          <button type="menuButton">☰</button>
+          <Link to={`/articles/`} className="headingLink">
+            <h1>Articles & Comments</h1>
+          </Link>
         </div>
         <Routes>
           <Route path="/" element={<ArticleList />} />
