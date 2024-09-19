@@ -25,7 +25,7 @@ const Article = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError("error fetching data");
+        setError("This article doesn't exist.");
         setIsLoading(false);
       });
 
@@ -120,7 +120,7 @@ const Article = () => {
     return <p>Loading...</p>;
   }
   if (error) {
-    return <p>Something went wrong...</p>;
+    return <h3 className="error">{error}</h3>;
   }
 
   return (

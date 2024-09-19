@@ -80,16 +80,16 @@ const ArticleList = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError("error fetching data");
+        setError("No articles found...");
         setIsLoading(false);
       });
   }, [topic_name, sort_by, order]);
 
   if (isLoading) {
-    return <p>Loading items....</p>;
+    return <p>Loading articles....</p>;
   }
   if (error) {
-    return <p>Something went wrong...</p>;
+    return <h3 className="error">{error}</h3>;
   }
 
   return (

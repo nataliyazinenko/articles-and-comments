@@ -15,16 +15,12 @@ const Topics = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError("error fetching topics");
         setIsLoading(false);
       });
   }, []);
 
   if (isLoading) {
     return <p>Loading topics....</p>;
-  }
-  if (error) {
-    return <p>{error}</p>;
   }
 
   return (

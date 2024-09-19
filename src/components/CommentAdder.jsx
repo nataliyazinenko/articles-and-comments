@@ -30,7 +30,7 @@ const CommentAdder = ({ addNewComment }) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError("problem occured - posting failed");
+        setError("oops, posting failed");
         setIsLoading(false);
       });
   };
