@@ -1,5 +1,6 @@
-import { getTopics } from "../../api";
+import { getTopics, getAllArticles } from "../../api";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Topics = () => {
   const [topics, setTopics] = useState([]);
@@ -32,7 +33,9 @@ const Topics = () => {
         {topics.map((topic) => {
           return (
             <section key={topic.slug} className="topic">
-              <h2>{topic.slug}</h2>
+              <Link to={`/topic_articles/${topic.slug}`} className="topicLink">
+                <h2>{topic.slug}</h2>
+              </Link>
             </section>
           );
         })}

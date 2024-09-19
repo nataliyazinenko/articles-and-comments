@@ -8,7 +8,6 @@ import { LiaCommentAltSolid } from "react-icons/lia";
 
 const ArticleList = () => {
   const { topic_name } = useParams();
-  console.log("!!! topic_name", topic_name);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
