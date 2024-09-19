@@ -4,10 +4,14 @@ const articlesandcommentsAPI = axios.create({
   baseURL: "https://project01-wgzu.onrender.com/api",
 });
 
-export function getAllArticles() {
-  return articlesandcommentsAPI.get("/articles").then(({ data }) => {
-    return data;
-  });
+export function getAllArticles(query) {
+  return articlesandcommentsAPI
+    .get("/articles", {
+      params: query,
+    })
+    .then(({ data }) => {
+      return data;
+    });
 }
 
 export function getArticle(article_id) {
@@ -48,4 +52,18 @@ export function postComment(article_id, username, newComment) {
     .then(({ data }) => {
       return data;
     });
+}
+
+export function deleteComment(comment_id) {
+  return articlesandcommentsAPI
+    .delete(`comments/${comment_id}`)
+    .then(({ data }) => {
+      return data;
+    });
+}
+
+export function getTopics() {
+  return articlesandcommentsAPI.get("/topics").then(({ data }) => {
+    return data;
+  });
 }

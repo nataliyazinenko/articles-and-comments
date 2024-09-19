@@ -1,19 +1,22 @@
 import { getAllArticles } from "../../api";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import SortBy from "./SortBy";
 import { GrLike } from "react-icons/gr";
 import { LiaCommentAltSolid } from "react-icons/lia";
 
 const ArticleList = () => {
+  const { topic_name } = useParams();
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const query = { topic: topic_name };
+
   useEffect(() => {
     setError(null);
-    getAllArticles()
+    getAllArticles(query)
       .then((data) => {
         setArticles(data.articles);
         setIsLoading(false);
@@ -22,7 +25,7 @@ const ArticleList = () => {
         setError("error fetching data");
         setIsLoading(false);
       });
-  }, []);
+  }, [topic_name]);
 
   if (isLoading) {
     return <p>Loading items....</p>;
