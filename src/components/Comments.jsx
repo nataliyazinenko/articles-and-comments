@@ -24,7 +24,7 @@ const Comments = () => {
         });
       })
       .catch((error) => {
-        setError("error deleting comment");
+        setError("This comment has not been deleted");
       });
     setIsDeleting(null);
   };
@@ -37,7 +37,7 @@ const Comments = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError("error fetching comments");
+        setError("Sorry about that, there was an error loading comments");
         setIsLoading(false);
       });
   }, [article_id]);

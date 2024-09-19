@@ -144,3 +144,9 @@
 .buttonNotHighlighted {
   background-color: #ffffff;
 }
+
+.error {
+  padding: 20px;
+  text-align: right;
+  color: #3c3a3a;
+}
