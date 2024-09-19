@@ -74,7 +74,7 @@ const Comments = () => {
                 <h5>
                   {comment.author}
                   <br />
-                  {moment(comment.created_at).startOf("hour").fromNow()}
+                  {moment(comment.created_at).startOf("minute").fromNow()}
                 </h5>
 
                 <p className="comment">{comment.body}</p>
