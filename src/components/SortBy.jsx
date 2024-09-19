@@ -1,14 +1,31 @@
-const SortBy = () => {
+import React, { useState, useEffect } from "react";
+
+const SortBy = ({ sortByOptions, selectedSortBy, setSelectedSortBy }) => {
+  const [error, setError] = useState(null);
+
+  const handleSortByChange = (event) => {
+    setSelectedSortBy(event.target.value);
+  };
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <div className="sortBy">
-      <select>
+      <select
+        id="sortBySelect"
+        onChange={handleSortByChange}
+        value={selectedSortBy}
+      >
         <option value="">Sort by</option>
-        <option value="">Date, new to old</option>
-        <option value="">Date, old to new</option>
-        <option value="">Comment count, high to low</option>
-        <option value="">Comment count, low to high</option>
-        <option value="">Votes count, high to low</option>
-        <option value="">Votes count, low to high</option>
+        {sortByOptions.map((optObject, index) => {
+          return (
+            <option key={index} value={index}>
+              {optObject.label}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
