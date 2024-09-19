@@ -12,7 +12,65 @@ const ArticleList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const query = { topic: topic_name };
+  const [selectedSortBy, setSelectedSortBy] = useState("");
+
+  const sortByOptions = [
+    {
+      label: "Date, new to old",
+      column: "created_at",
+      order: "DESC",
+    },
+    {
+      label: "Date, old to new",
+      column: "created_at",
+      order: "ASC",
+    },
+    {
+      label: "Comment count, high to low",
+      column: "comment_count",
+      order: "DESC",
+    },
+    {
+      label: "Comment count, low to high",
+      column: "comment_count",
+      order: "ASC",
+    },
+    {
+      label: "Votes count, high to low",
+      column: "votes",
+      order: "DESC",
+    },
+    {
+      label: "Votes count, low to high",
+      column: "votes",
+      order: "ASC",
+    },
+  ];
+
+  let selectedOptionIndex;
+  if (selectedSortBy === "") {
+    selectedOptionIndex = 0;
+  } else {
+    selectedOptionIndex = selectedSortBy;
+  }
+
+  const selectedOption = sortByOptions[selectedOptionIndex];
+
+  let sort_by;
+  let order;
+  if (selectedOption) {
+    sort_by = selectedOption.column;
+    order = selectedOption.order;
+  } else {
+    sort_by = undefined;
+    order = undefined;
+  }
+
+  const query = {
+    topic: topic_name,
+    sort_by: sort_by,
+    order: order,
+  };
 
   useEffect(() => {
     setError(null);
@@ -25,7 +83,7 @@ const ArticleList = () => {
         setError("error fetching data");
         setIsLoading(false);
       });
-  }, [topic_name]);
+  }, [topic_name, sort_by, order]);
 
   if (isLoading) {
     return <p>Loading items....</p>;
@@ -36,7 +94,11 @@ const ArticleList = () => {
 
   return (
     <div>
-      <SortBy />
+      <SortBy
+        sortByOptions={sortByOptions}
+        selectedSortBy={selectedSortBy}
+        setSelectedSortBy={setSelectedSortBy}
+      />
       <ul>
         {articles.map((article) => {
           return (

@@ -34,7 +34,7 @@ const Topics = () => {
           return (
             <section key={topic.slug} className="topic">
               <Link to={`/topic_articles/${topic.slug}`} className="topicLink">
-                <h2>{topic.slug}</h2>
+                <h2 className="topics">{topic.slug.toUpperCase()}</h2>
               </Link>
             </section>
           );
