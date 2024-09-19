@@ -44,6 +44,17 @@
   color: #000000;
 }
 
+.topics {
+  color: #1c1c1c;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: left;
+}
+
+.topics:hover {
+  color: #605858;
+}
+
 .articleListImage {
   display: block;
   max-width: 100%;

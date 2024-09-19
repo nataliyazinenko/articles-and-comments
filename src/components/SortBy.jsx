@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const SortBy = ({ sortByOptions, selectedSortBy, setSelectedSortBy }) => {
   const [error, setError] = useState(null);
